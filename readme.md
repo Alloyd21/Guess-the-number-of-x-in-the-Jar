@@ -14,7 +14,24 @@ To run this script, you will need the following Python packages:
 - `concurrent.futures`
 - `functools`
 
-Please ensure you install these packages in your Python environment before running the script.
+
+
+## Installation
+
+Before running the script, you need to install the required packages. If you do not have the packages installed, you can use the following command to install them:
+
+```
+bashCopy code
+pip install matplotlib numpy tqdm
+```
+
+This command will install the `matplotlib`, `numpy`, and `tqdm` packages, as the other dependencies are part of Python's standard library.
+
+## Running the Script
+
+1. Open your terminal (Linux or macOS) or Command Prompt (Windows).
+2. Navigate to the directory containing the script (e.g., `cd /path/to/your/script/folder`).
+3. Run the script using the command: `python egg_packing_estimator.py`. Make sure to replace `egg_packing_estimator.py` with the name of the script file if it has a different name.
 
 ## Usage
 

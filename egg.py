@@ -6,7 +6,7 @@ from tqdm import tqdm
 import concurrent.futures
 from functools import partial
 
-
+# Function to get user input for container type and dimensions
 def get_input():
     container_type = input(
         "Enter container type (cylinder/rectangle): ").lower()
@@ -23,6 +23,7 @@ def get_input():
         length = float(input("Enter the length of the rectangle (in cm): "))
         return container_type, height, None, width, length
 
+# Function to check if a given point is inside a rectangular container
 def is_inside_rectangle(x, y, z, r, height, width, length):
     return (
         -width / 2 + r <= x <= width / 2 - r
@@ -30,13 +31,15 @@ def is_inside_rectangle(x, y, z, r, height, width, length):
         and 0 + r <= z <= height - r
     )
 
+# Function to check if a given point is inside a cylindrical container
 def is_inside_cylinder(x, y, z, r, height, diameter):
     return z >= 0 and z <= height and x ** 2 + y ** 2 <= (diameter / 2) ** 2
 
+# Function to check if two points are within a minimum distance from each other
 def check_overlap(x1, y1, z1, x2, y2, z2, min_distance):
     return ((x1 - x2) ** 2 + (y1 - y2) ** 2 + (z1 - z2) ** 2) < min_distance ** 2
 
-
+# Function to perform the Monte Carlo simulation
 def monte_carlo_simulation(container_type, height, diameter, width, length, r, iterations):
     if container_type == 'cylinder':
         max_eggs = int(math.pi * (diameter / 2) ** 2 *
@@ -63,8 +66,7 @@ def monte_carlo_simulation(container_type, height, diameter, width, length, r, i
                     is_inside = is_inside_cylinder(
                         x, y, z, r, height, diameter)
                 elif container_type == 'rectangle':
-                    is_inside = is_inside_rectangle(
-                        x, y, z, r, height, width, length)
+                    is_inside = is_inside_rectangle(x, y, z, r, height, width, length)
                 if not is_inside:
                     continue
                 overlap = False
@@ -79,7 +81,7 @@ def monte_carlo_simulation(container_type, height, diameter, width, length, r, i
         egg_counts.append(egg_count)
     return egg_counts
 
-
+# Function to plot the number of eggs found in each iteration
 def plot_egg_counts(egg_counts):
     plt.figure()
     iterations = range(1, len(egg_counts) + 1)
@@ -94,6 +96,7 @@ def plot_egg_counts(egg_counts):
     plt.legend()
     plt.show()
 
+# Worker function to run Monte Carlo simulation for a specified number of iterations
 def worker(container_type, height, diameter, width, length, r, iterations_per_worker, pbar):
     result = monte_carlo_simulation(
         container_type, height, diameter, width, length, r, iterations_per_worker)
@@ -129,3 +132,4 @@ if __name__ == "__main__":
     print(f"The volume of the egg is approximately {volume:.2f} cubic centimeters.")
 
     plot_egg_counts(egg_counts)
+
